@@ -1,0 +1,35 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+## getting count of cuisines for each row of dataset
+def get_count(cuisines):
+    l=len(cuisines.split(","))
+    return l
+new_df=df.copy()
+Count_Cuisines=df["Cuisines"].copy()
+
+Count_Cuisines=Count_Cuisines.apply(get_count)
+     
+new_df["Count_Cuisines"]=Count_Cuisines
+    
+## plotting count of cuisines against Rating Color
+plt.figure(figsize=(8,5))
+plt.scatter(new_df[new_df["Rating color"]=="White"].Count_Cuisines,new_df[new_df["Rating color"]=="White"]["Rating color"],
+            c="grey",label="rating= 0.0")
+plt.scatter(new_df[new_df["Rating color"]=="Red"].Count_Cuisines,new_df[new_df["Rating color"]=="Red"]["Rating color"],
+            c="red",label="0.0 <rating< 2.5")
+plt.scatter(new_df[new_df["Rating color"]=="Orange"].Count_Cuisines,new_df[new_df["Rating color"]=="Orange"]["Rating color"],
+            c="Orange",label="2.5 <=rating< 3.5")
+plt.scatter(new_df[new_df["Rating color"]=="Yellow"].Count_Cuisines,new_df[new_df["Rating color"]=="Yellow"]["Rating color"],
+            c="yellow",label="3.5 <=rating< 4.0")
+plt.scatter(new_df[new_df["Rating color"]=="Green"].Count_Cuisines,new_df[new_df["Rating color"]=="Green"]["Rating color"],
+            c="lawngreen",label="4.0 <=rating< 4.5")
+plt.scatter(new_df[new_df["Rating color"]=="Dark Green"].Count_Cuisines,
+            new_df[new_df["Rating color"]=="Dark Green"]["Rating color"],c="darkgreen",label="4.5 <=rating< 5.0")
+
+plt.legend(bbox_to_anchor=(1.05, 1.0),loc="best")
+plt.xlabel("Count of Cuisines")
+plt.ylabel("Ratings Color")
+plt.title("Cuisines_Count  Vs.  Rating")
+plt.tight_layout()
+plt.show()

@@ -1,0 +1,19 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+data=pd.read_csv("zomato.csv",encoding="ISO-8859-1")
+df1=data.copy()
+a = 0
+b = 0
+for i in df1.index:
+    if df1['City'][i] in ['New Delhi', 'Noida', 'Ghaziabad', 'Gurgaon', 'Faridabad']:
+        a += 1
+    else:
+        b += 1
+x = [a, b]
+y = ['Delhi NCR', 'Rest of India']
+plt.bar(y, x, edgecolor = "black")
+plt.ylabel('No. of Restaurants')
+plt.title('Restaurants in India')
+plt.show()
+print('Restaurants in Delhi NCR: ', a)
+print('Restaurants in rest of India: ', b)

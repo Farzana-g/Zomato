@@ -1,0 +1,47 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+## Restaurants that have zero rating on an average are dropped
+Cuisines=df.copy()
+def get_list(s):
+    s=s.split(",")
+    l=[]
+    for i in s:
+        l.append(i.strip())
+    return l
+Cuisines["Cuisines"]=Cuisines["Cuisines"].apply(get_list)
+Cuisines.reset_index(drop=True,inplace=True)
+
+l=[]
+#Row number
+for row in Cuisines.values:
+    for j in row[9]:
+        l.append([row[17],j.strip()])
+    
+specific_cuisines=pd.DataFrame(l)
+specific_cuisines.columns=["Rating","Cuisines"]
+
+groups=specific_cuisines.groupby("Cuisines")
+
+final_list=[]
+
+for key,group in groups:
+    if group["Rating"].mean()!=0.0:
+        final_list.append([format(group["Rating"].mean(),".2f"),key])
+
+final_list=np.array(final_list)
+x=np.array(final_list[:,1])
+y=np.array(final_list[:,0],dtype=float)
+ind_min=y.argmin()
+ind_max=y.argmax()
+print(x[ind_min],x[ind_max])
+### plotting specific cuisine against average rating
+plt.figure(figsize=(15,5))
+plt.bar(x,y,width=1,edgecolor="black",color="yellow")
+plt.bar(x[ind_min],y.min(),color="blue",edgecolor="black")
+plt.bar(x[ind_max],y.max(),color="darkgreen",edgecolor="black")
+plt.xticks(rotation=90)
+plt.xlabel("Cuisines")
+plt.ylabel("Avg. Rating")
+plt.title("Impact of Cuisines on Rating")
+plt.show()

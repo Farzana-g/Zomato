@@ -1,0 +1,27 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+## plotting restaurants against number of votes
+
+## RESTAURANT NAME CAN BE SAME , BUT THEY MAY BE AT DIFFERENT LOCATION,BUT VOTES COUNT HAS TO ADDED
+
+votes_res={}
+for i in df.values:
+    votes_res[i[1].strip()]=votes_res.get(i[1].strip(),0)+i[20] 
+    
+list_res=[]
+for i in votes_res:
+    list_res.append([votes_res[i],i])
+x=[]
+y=[]
+list_res=sorted(list_res,reverse=True)
+for i in range(11):
+    x.append(list_res[i][1].strip())
+    y.append(list_res[i][0])
+plt.bar(x,y,color="grey")
+plt.xticks(rotation=90)
+plt.xlabel("Restaurants")
+plt.ylabel("No. of Votes")
+plt.title("Restaurants Vs. Votes")
+plt.show()
+print(list_res[:10])

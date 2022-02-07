@@ -1,0 +1,25 @@
+## ANALYSIS
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+cuisines_delhi=set()
+for i in set(delhi["Cuisines"]):
+    l=i.split(",")
+    for j in l:
+        cuisines_delhi.add(j.strip())
+print("types of cuisines in delhi_ncr:",len(cuisines_delhi))
+cuisines_rest_india=set()
+for i in set(rest_india["Cuisines"]):
+    l=i.split(",")
+    for j in l:
+        cuisines_rest_india.add(j.strip())
+print("types of cuisines in Rest of India:",len(cuisines_rest_india))
+
+### plotting location against no. of types of cuisines served in that location
+no_of_types_cuisines=[len(cuisines_delhi),len(cuisines_rest_india)]
+region=["Delhi NCR","Rest of India"]
+plt.bar(region,no_of_types_cuisines,width=0.3,color="Red",edgecolor="Black")
+plt.xlabel("Location")
+plt.ylabel("Types OF Cuisines")
+plt.title("Location Vs. Cuisines")
+plt.show()

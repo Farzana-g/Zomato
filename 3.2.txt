@@ -1,0 +1,11 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+l=[i for i in range(1,6)]
+plt.hist(df["Aggregate rating"],edgecolor="black",color="purple",bins=l)
+plt.xticks(l)
+plt.xlabel("Aggregate Rating")
+plt.ylabel("Frequency")
+plt.title("Rating of Restaurants")
+print((len(df[(df["Aggregate rating"]>=4)&(df["Aggregate rating"]<=5)])))
+plt.show()

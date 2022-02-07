@@ -1,0 +1,43 @@
+import pandas as pd
+import numpy as np
+data=pd.read_csv("zomato.csv",encoding="ISO-8859-1")
+df=data[data["Country Code"]==1]
+# df["City"].unique()
+delhi=(df[(df["City"]=="Gurgaon")|(df["City"]=="New Delhi")|(df["City"]=="Ghaziabad")|(df["City"]=="Noida")|
+                (df["City"]=="Faridabad")] )
+rest_india=(df[(df["City"]!="Gurgaon")&(df["City"]!="New Delhi")&(df["City"]!="Ghaziabad")&(df["City"]!="Noida")&
+                (df["City"]!="Faridabad")] )
+
+## finding cuisines served in rest of india but not in delhi
+cuisines_delhi=set()
+for i in set(delhi["Cuisines"]):
+    l=i.split(",")
+    for j in l:
+        cuisines_delhi.add(j.strip())
+
+cuisines_rest_india=set()
+for i in set(rest_india["Cuisines"]):
+    l=i.split(",")
+    for j in l:
+        cuisines_rest_india.add(j.strip())
+
+
+common_cuisines=cuisines_delhi.intersection(cuisines_rest_india)
+final_ans=[]
+for i in cuisines_rest_india:
+    if i not in common_cuisines:
+        final_ans.append(i) 
+final_ans
+
+
+#THrough Zomato API
+import requests
+parametres={"city_id":1}
+r=requests.get("https://developers.zomato.com/api/v2.1/cuisines",params=parametres,
+               headers={"user-key":"2ecee8e9ad3c0f0d542ec915d2506848","accept":"application/json"})
+py=r.json()
+l=[]
+for i in py["cuisines"]:
+    
+    l.append(i["cuisine"]["cuisine_name"].strip())
+l

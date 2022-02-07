@@ -1,0 +1,23 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+## plotting votes against Rating color
+## Plotting Scatter since BAR grapgh doesnt provide clear information
+plt.scatter(df[df["Rating color"]=="White"].Votes,df[df["Rating color"]=="White"]["Rating color"],
+            c="grey",label="        rating= 0.0")
+plt.scatter(df[df["Rating color"]=="Red"].Votes,df[df["Rating color"]=="Red"]["Rating color"],
+            c="red",label="0.0 <rating< 2.5")
+plt.scatter(df[df["Rating color"]=="Orange"].Votes,df[df["Rating color"]=="Orange"]["Rating color"],
+            c="Orange",label="2.5 <=rating< 3.5")
+
+plt.scatter(df[df["Rating color"]=="Yellow"].Votes,df[df["Rating color"]=="Yellow"]["Rating color"],
+            c="yellow",label="3.5 <=rating< 4.0")
+plt.scatter(df[df["Rating color"]=="Green"].Votes,df[df["Rating color"]=="Green"]["Rating color"],
+            c="lawngreen",label="4.0 <=rating< 4.5")
+plt.scatter(df[df["Rating color"]=="Dark Green"].Votes,df[df["Rating color"]=="Dark Green"]["Rating color"],
+            c="darkgreen",label="4.5 <=rating< 5.0")
+plt.legend()
+plt.xlabel("Votes")
+plt.ylabel("Ratings")
+plt.title("Votes  Vs.  Rating")
+plt.show()

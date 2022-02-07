@@ -1,0 +1,25 @@
+## plotting pie graph of number of different types of Cuisines served in USA
+data_usa=data[data["Country Code"]==216]
+cuisines=data_usa["Cuisines"].copy()
+cuisines.dropna(inplace=True)
+cuisines.reset_index(drop=True,inplace=True)
+cuisines
+usa_cuisines=[]
+for i in cuisines.values:
+    l=i.split(",")
+    for j in l:
+        usa_cuisines.append(j.strip())
+unique_cuisines, counts=np.unique(usa_cuisines,return_counts=True)
+# SORTING
+index=counts.argsort()
+sorted_counts=counts[index]
+unique_cuisines=unique_cuisines[index]
+x=unique_cuisines[(len(counts)-1):(len(counts)-11):-1]
+y=sorted_counts[(len(counts)-1):(len(counts)-11):-1]
+plt.figure(figsize=(10,5))
+plt.pie(y,labels=x,autopct="%.1f%%")
+plt.axis("equal")
+plt.title("TOP CUISINES IN USA")
+plt.show()
+print(x)
+print(y)

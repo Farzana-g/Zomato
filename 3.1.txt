@@ -1,0 +1,33 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+## finding restaurants along with number of cuisines served in that restarants all over the country
+grouping=df.groupby("Restaurant Name")
+ans=[]
+for key,group in grouping:
+    distinct_cuisines=set()
+    for i in group["Cuisines"].values:
+        l=i.split(",")
+        
+        for j in l:
+            distinct_cuisines.add(j.strip())
+            
+    ans.append([len(distinct_cuisines),key.strip()])
+#Sorting descending order
+ans=sorted(ans,reverse=True)
+## while plotting bar graph for first 15, some restaurants have same outlets as of 15th number are to be rejected
+
+x=[]
+y=[]
+
+for row in ans:
+    x.append(row[1])
+    y.append(row[0])
+
+plt.figure(figsize=(15,5))
+plt.bar(x[0:15],y[0:15],color="Orange")
+plt.xticks(rotation=60)
+plt.xlabel("Restaurants")
+plt.ylabel("No. of Outlets")
+plt.title("Top 15 Restaurants")
+plt.show()

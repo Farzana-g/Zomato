@@ -1,0 +1,36 @@
+##DELHI
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+data=pd.read_csv("zomato.csv",encoding="ISO-8859-1")
+df=data[data["Country Code"]==1]
+# df["City"].unique()
+delhi=(df[(df["City"]=="Gurgaon")|(df["City"]=="New Delhi")|(df["City"]=="Ghaziabad")|(df["City"]=="Noida")|
+                (df["City"]=="Faridabad")] )
+#### For Delhi_NCR-- cuisines and no. of restaurants serving these cuisines
+all_cuisines_delhi=[]
+for i in (delhi["Cuisines"]):
+    l=i.split(",")
+    for j in l:
+        all_cuisines_delhi.append(j.strip())
+unique,counts=np.unique(all_cuisines_delhi,return_counts=True)
+# print(counts)
+ind=counts.argsort()
+unique=unique[ind]
+counts=counts[ind]
+top_cuisines_ncr=[]
+for i in range(-1,-11,-1):
+    top_cuisines_ncr.append([unique[i],counts[i]])
+    print(unique[i],counts[i])
+## for delhi types of cuisines
+## plotting types of cuisines against number of restaurants serving that cuisine
+top_cuisines_india=[]
+top_cuisines_ncr=np.array(top_cuisines_ncr)
+top_cuisines_india=np.array(top_cuisines_india)
+count_cuisines_ncr=np.array(top_cuisines_ncr[:,1],dtype=int)
+plt.bar(top_cuisines_ncr[:,0],count_cuisines_ncr,color="pink")
+plt.xticks(rotation=60)
+plt.xlabel("Types of Cuisines")
+plt.ylabel("No. of Restaurants")
+plt.title("TOP 10 CUISINES in DELHI NCR")
+plt.show()

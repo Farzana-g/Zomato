@@ -1,0 +1,17 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+## finding weighted rating of restaurants in diffrent localities
+## grouping dataset based on Locality
+g=df.groupby("Locality")
+ans=[]
+for keys,group in g:
+    ans.append([((group["Aggregate rating"]*group["Votes"]).sum())/(group["Votes"].sum()),keys.strip()])
+
+weighted=pd.DataFrame(sorted(ans,reverse=True))
+weighted.dropna(inplace=True)
+weighted.reset_index(drop=True,inplace=True)
+
+for i in range(10):
+    print(weighted.values[i][1],weighted.values[i][0])
+#### warning is due to zerodivison 

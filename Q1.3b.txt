@@ -1,0 +1,33 @@
+##Rest of India
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+#### For Rest of India--  cuisines and no. of restaurants serving these cuisines
+rest_india=(df[(df["City"]!="Gurgaon")&(df["City"]!="New Delhi")&(df["City"]!="Ghaziabad")&(df["City"]!="Noida")&
+                (df["City"]!="Faridabad")] )
+all_cuisines_india=[]
+for i in (rest_india["Cuisines"]):
+    l=i.split(",")
+    for j in l:
+        all_cuisines_india.append(j.strip())
+unique,counts=np.unique(all_cuisines_india,return_counts=True)
+# print(counts)
+ind=counts.argsort()
+unique=unique[ind]
+counts=counts[ind]
+top_cuisines_india=[]
+for i in range(-1,-11,-1):
+    top_cuisines_india.append([unique[i],counts[i]])
+    print(unique[i],counts[i])
+
+## for REST OF INDIA types of cuisines
+## plotting types of cuisines against number of restaurants serving that cuisine
+top_cuisines_ncr=np.array(top_cuisines_ncr)
+top_cuisines_india=np.array(top_cuisines_india)
+count_cuisines_india=np.array(top_cuisines_india[:,1],dtype=int)
+plt.bar(top_cuisines_india[:,0],count_cuisines_india,color="green")
+plt.xticks(rotation=60)
+plt.xlabel("Types of Cuisines")
+plt.ylabel("No. of Restaurants")
+plt.title("TOP 10 CUISINES in Rest Of INDIA")
+plt.show()

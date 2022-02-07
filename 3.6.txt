@@ -1,0 +1,26 @@
+#### gouping data on the basis of city
+rest_india=(df[(df["City"]!="Gurgaon")&(df["City"]!="New Delhi")&(df["City"]!="Ghaziabad")&(df["City"]!="Noida")&
+                (df["City"]!="Faridabad")] )
+g=rest_india.groupby("City")
+list_ans=[]
+for keys,group in g:
+    list_ans.append([((group["Aggregate rating"]*group["Votes"]).sum())/(group["Votes"].sum()),keys.strip(),len(group)])
+weighted=pd.DataFrame(sorted(list_ans,reverse=True))
+weighted.dropna(inplace=True)
+weighted.reset_index(drop=True,inplace=True)
+    ## weighted ratings are multiplied by 50 so that we can see difference in bubble graph,
+    # otherwise size would be very small ,becoz want to draw insights not exact decimal representation
+sizes=[]
+for i in weighted.values[:,0]:
+    sizes.append(float(format(i,"0.1f"))*50)
+cities=weighted.values[:,1]
+count_res=weighted.values[:,2]
+## plotting cities against number of restaurants
+plt.figure(figsize=(20,5))
+plt.scatter(cities,count_res,s=sizes,c=sizes)
+plt.xticks(rotation=90)
+plt.xlabel("Cities")
+plt.yticks(range(0,24,2))
+plt.ylabel("No. of Restaurants")
+plt.title("For Rest INDIA")
+plt.show()
